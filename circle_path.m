@@ -9,7 +9,7 @@ Z = h*ones(1,n);
 X = R*sin(t);
 Y = R*cos(t);
 for i = 1: length(t_travel)
-x(:,i) = -x0 + t_travel(i)/travel.*[X(1);Y(1);Z(1)];
+x(:,i) = x0 + t_travel(i)/travel.*[X(1);Y(1);Z(1)];
 
 end
 x;
