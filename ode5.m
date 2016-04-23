@@ -1,4 +1,4 @@
-function Y = ode5(odefun,tspan,y0,varargin)
+function Y = ode5(odefun, tspan, y0, Yd, varargin)
 %ODE5  Solve differential equations with a non-adaptive method of order 5.
 %   Y = ODE5(ODEFUN,TSPAN,Y0) with TSPAN = [T1, T2, T3, ... TN] integrates 
 %   the system of differential equations y' = f(t,y) by stepping from T0 to 
@@ -84,7 +84,7 @@ for i = 2:N
   for stage = 2:nstages
     tstage = ti + C(stage-1)*hi;
     ystage = yi + F(:,1:stage-1)*(hi*A(1:stage-1,stage-1));
-    F(:,stage) = feval(odefun,tstage,ystage,varargin{:});
+    F(:,stage) = feval(odefun, tstage, ystage, i, varargin{:});
   end  
   Y(:,i) = yi + F*(hi*B);
   
