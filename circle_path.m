@@ -15,3 +15,7 @@ end
 x;
 [X Y Z];
 traj = [t_travel t; x [X; Y; Z]];
+n = size(traj, 2);
+traj = [traj; zeros(1,n)];
+
+end
