@@ -7,7 +7,7 @@ n = length(t);
 Z = h*ones(1,n);
 X = R*sin(t+pi/2);
 Y = R*cos(2*t);for i = 1:length(t_travel)
-x(:,i) = x0 - t_travel(i)/travel*([X(0) Y(0) Z(0)]);
+x(:,i) = x0 + t_travel(i)/travel*([X(0) Y(0) Z(0)]);
 end
 
 traj = [t_travel t; x [X; Y; Z]];
