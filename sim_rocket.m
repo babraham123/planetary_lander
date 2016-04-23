@@ -30,7 +30,7 @@ function sim_rocket()
     plotResults(T, X, Xd, U);
     
     % Animation
-    animate(T, X, Xd, U);
+    animate3(T, X, Xd, U);
 end
 
 

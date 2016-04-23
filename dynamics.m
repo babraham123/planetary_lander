@@ -1,39 +1,26 @@
-function [xDot] = dynamics(X, U, consts) 
-% x    = x,y,z, vx,vy,vz, theta,phi,psi, wx,wy,wz
-% xDot = vx,vy,vz, ax,ay,az, wx,wy,wz, dwx,dwy,dwz
+function [xDot, omega] = dynamics(X, U, consts) 
+% x    = x,y,z, vx,vy,vz, theta,phi,psi, dtheta,dphi,dpsi
+% xDot = vx,vy,vz, ax,ay,az, dtheta,dphi,dpsi, dwx,dwy,dwz
 % u = f_b1, f_b2, f_b3, tx, ty, tz,
 
 % initialize variables
 x = X(1:3);
 v = X(4:6);
 eulerAngles = X(7:9);
-omega = X(10:12);
+dEulerAngles = X(10:12);
 force_body = U(1:3);
 torque = U(4:6);
 
-
-% State of rotation
-c1 = cos(eulerAngles(1));
-s1 = sin(eulerAngles(1));
-c2 = cos(eulerAngles(2));
-s2 = sin(eulerAngles(2));
-c3 = cos(eulerAngles(3));
-s3 = cos(eulerAngles(3));
-
-R = [c3*c1-s2*s3*s1 -c2*c3 c3*s1+c1*s2*s3;
-c1*s3+c3*s2*s1 c2*c3 s3*s1-c3*c1*s2;
--c2*s1 s2 c2*c2];
-Adj = [R zeros(3);
-zeros(3) R];
+R = eulerToRot(eulerAngles);
 
 %angular acceleration
-omegaDot = I\(torque - cross(omega,omega*I));
+omega = eulerToOmega(eulerAngles, dEulerAngles);
+omegaDot = I\(torque - cross(omega,I*omega));
 
 %Spacial accelerations
-force_spatial = Adj*force_body;
-vDot = force_spatial/mass;
+force_spatial = (R*force_body) - [0; 0; consts.mass*consts.g];
+vDot = force_spatial./consts.mass;
 
-xDot = [v; vDot; omega; omegaDot];
-
+xDot = [v; vDot; dEulerAngles; omegaDot];
 
 end
