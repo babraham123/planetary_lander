@@ -18,7 +18,7 @@ function sim_rocket()
     trajectory = [trajectory; vd; ad];
 
     % calculate gains for PD control, [Kp; Kd]
-    K = calculateGains();
+    K = calculateGains(consts);
 
     % Integrate system
     [X, Xd, U] = simulate(tspan, x0, trajectory, consts, K);

@@ -23,5 +23,7 @@ function consts = get_consts()
     Ix = consts.mass*(3*(consts.rx^2) + (consts.h^2)) / 12;
     Iz = consts.mass*(consts.rx^2) / 2;
     consts.I = diag([Ix, Ix, Iz]);
-    
+
+    % mixing logic
+    consts.H = eye(6);
 end
