@@ -1,4 +1,5 @@
 function traj = circle_path(R,h,x0)
+
 dt = 0.1;
 travel = 8;
 t_travel = 0:dt:travel;
@@ -7,7 +8,10 @@ n = length(t);
 Z = h*ones(1,n);
 X = R*sin(t);
 Y = R*cos(t);
-x = x0 - t_travel/travel*([X(0) Y(0) Z(0)]);
+for i = 1: length(t_travel)
+x(:,i) = x0 - t_travel(i)/travel.*[X(1);Y(1);Z(1)];
 
-traj = [t_travel x; t X Y Z];
 end
+x;
+[X Y Z];
+traj = [t_travel t; x [X; Y; Z]];
