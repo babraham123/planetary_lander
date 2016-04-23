@@ -1,5 +1,5 @@
 function [x_dot] = simulate(tspan, x0, Xd, consts) 
-% x = x,y,z, vx,vy,vz, ax,ay,az, theta,phi,psi, wx,wy,wz, dwx,dwy,dwz
+% x    = x,y,z, vx,vy,vz, theta,phi,psi, wx,wy,wz
 
 n = length(x0);
 steps = length(tspan);
@@ -26,7 +26,7 @@ for k = 2:steps
         update = true;
     end
 
-    u = [Fb3; M];
+    u = [0, 0, Fb3; M];
     if update
         % thruster mixing logic
         if thrusterSelection

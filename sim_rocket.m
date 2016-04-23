@@ -8,7 +8,7 @@ function sim_rocket()
     
     % generate trajectory of desired positions, xd = [x y z psi]
     trajectory = guidance(x0, 'hover');
-    
+
     % interpolate and differentiate
     xd = interp1(trajectory(1,:), trajectory(2:end,:), tspan, 'cubic');
     vd = diff(xd)./diff(td);
@@ -21,7 +21,7 @@ function sim_rocket()
     K = calculateGains();
 
     % Integrate system
-    [T, X, Xd, U] = simulate(tspan, x0, trajectory, consts, K);
+    [X, Xd, U] = simulate(tspan, x0, trajectory, consts, K);
     
     % J = compute_score(T, X, trajectory, consts);
     % disp(['Score: ' num2str(J)]) ;
@@ -30,7 +30,7 @@ function sim_rocket()
     plotResults(T, X, Xd, U);
     
     % Animation
-    animate(T, X, U);
+    animate(T, X, Xd, U);
 end
 
 
