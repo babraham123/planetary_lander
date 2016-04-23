@@ -1,19 +1,29 @@
 function animate3(t_orig, x_orig, traj_orig, u_orig)
 rate = 2.5;  % Change this to speed up / slow down animation [Matlab R2014b and onwards appears to have slow rendering for animation.]
 
-T = linspace(t_orig(1), t_orig(end), round( (t_orig(end)-t_orig(1))*rate ))' ;
-X = interp1(t_orig, x_orig, T, 'cubic');
-U = interp1(t_orig, u_orig, T, 'cubic');
-traj = interp1(t_orig, traj_orig, T, 'cubic');
+%T = linspace(t_orig(1), t_orig(end), round( (t_orig(end)-t_orig(1))*rate ))' ;
+%X = interp1(t_orig, x_orig, T, 'cubic');
+%U = interp1(t_orig, u_orig, T, 'cubic');
+%traj = interp1(t_orig, traj_orig, T, 'cubic');
+T = t_orig';
+X = x_orig;
+U = u_orig;
+traj = traj_orig;
 consts = get_consts();
 % initialize variables
-x = X(1:3,:);
+xi = X(1:3,:);
 v = X(4:6,:);
 eulerAngles = X(7:9,:);
 omega = X(10:12,:);
 force_body = U(1:3,:);
 torque = U(4:6,:);
 trajectory = traj(1:3,:);
+trajx = trajectory(1,:);
+trajy = trajectory(2,:);
+trajz = trajectory(3,:);
+xax = [min(trajx) - 3, max(trajx)+3];
+yax = [min(trajy) - 3, max(trajy)+3];
+zax = [min(trajz) - 3, max(trajz)+3];
 
 
 %% Setup of simulation
@@ -62,10 +72,10 @@ xlabel('X','fontweight' ,'bold')
 ylabel('Y','fontweight','bold')
 zlabel('Z','fontweight','bold')
 
-axis([-2 1 -1 1 -3 0]) % expand & lock our view axes, to see better
+axis([xax yax zax]) % expand & lock our view axes, to see better
 
 %%Animation;
-n = length(t_vec);
+n = length(T);
 for i = 1:n
 
     % State of rotation
@@ -82,7 +92,8 @@ for i = 1:n
     c1*s3+c3*s2*s1 c2*c3 s3*s1-c3*c1*s2;
     -c2*s1 s2 c2*c2];
     %position
-    pos = x(:,i);
+    pos = xi(:,i);
+    temp = traj(1:3,i);
 
     %update animation
     H0 = eye(4); % make Identity homogeneous transform
@@ -91,8 +102,8 @@ for i = 1:n
 
     set(F0,'Matrix',H0);  
     pause(0.15)
-    plot3(trajectory,'k','Linewidth',3); %plots trajectory
-    plot3(x(1,1:i),x(2,1:i),x(3,1:i),'r','LineWidth',2) %plots path traveled
+    plot3(trajx,trajy,trajz,'k','Linewidth',3); %plots trajectory
+    plot3(xi(1,1:i),xi(2,1:i),xi(3,1:i),'r','LineWidth',1.5) %plots path traveled
     drawnow % force plot to update
 end
 
