@@ -14,7 +14,7 @@ function consts = get_consts()
     consts.thrusterMax = 3060;
 
     consts.forceMin = [0 0 3200]'; % N
-    consts.forceMax = [2130 2130 24480]';
+    consts.forceMax = [0 0 24480]';
     consts.torqueMaxAbs = [18620 23940 10000]'; % Nm
 
     consts.rx = 2.25; % m

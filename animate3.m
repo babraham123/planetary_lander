@@ -28,7 +28,7 @@ zax = [min(trajz) - 3, max(trajz)+3];
 
 %% Setup of simulation
 % dock figures
-set(0,'DefaultFigureWindowStyle','docked')
+%set(0,'DefaultFigureWindowStyle','docked')
 
 % create a figure, wait, call it again to make it pop to the foreground
 myfig = figure();
@@ -79,14 +79,14 @@ n = length(T);
 for i = 1:n
 
     % State of rotation
-    Angles = eulerAngles(:,i);
+    angles = eulerAngles(:,i);
 
-    c1 = cos(Angles(1));
-    s1 = sin(Angles(1));
-    c2 = cos(Angles(2));
-    s2 = sin(Angles(2));
-    c3 = cos(Angles(3));
-    s3 = cos(Angles(3));
+    c1 = cos(angles(1));
+    s1 = sin(angles(1));
+    c2 = cos(angles(2));
+    s2 = sin(angles(2));
+    c3 = cos(angles(3));
+    s3 = cos(angles(3));
 
     R = [c3*c1-s2*s3*s1 -c2*c3 c3*s1+c1*s2*s3;
     c1*s3+c3*s2*s1 c2*c3 s3*s1-c3*c1*s2;

@@ -1,4 +1,4 @@
-function traj = 8_path(R,h,x0)
+function traj = eight_path(R,h,x0)
 
 dt = 0.1;
 travel = 8;
