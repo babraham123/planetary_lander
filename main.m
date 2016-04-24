@@ -19,10 +19,10 @@ xd = interp1(trajectory(1,:)', trajectory(2:end,:)', T', 'pchip');
 td = repmat(T', [1, 4]);
 vd = diff(xd) ./ diff(td);
 ad = diff(vd) ./ diff(td(1:end-1,:));
-vd = vd'; ad = ad';
+xd = xd'; vd = vd'; ad = ad';
 vd(:,end+1) = [0 0 0 0]';
 ad(:,end+1) = [0 0 0 0]'; ad(:,end+1) = [0 0 0 0]';
-trajectory = [trajectory; vd; ad];
+trajectory = [xd; vd; ad];
 
 % calculate gains for PD control, [Kp; Kd]
 K = calculateGains(consts);

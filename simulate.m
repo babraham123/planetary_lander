@@ -59,9 +59,13 @@ for k = 1:steps-1
     X(:,k+1) = x + xDot*h;
     X(10:12,k+1) = omegaToEuler(X(7:9,k+1), omega + xDot(10:12)*h);
 
-    Xd(:,k+1) = [traj(1:3); traj(5:7); theta_d;phi_d;traj(4); 0;0;traj(8)];
+    Xd(:,k) = [traj(1:3); traj(5:7); theta_d;phi_d;traj(4); 0;0;traj(8)];
     U(:,k) = u;
 end
+
+traj = trajectory(:,end);
+Xd(:,end) = [traj(1:3); traj(5:7); theta_d;phi_d;traj(4); 0;0;traj(8)];
+U(:,end) = u;
 
 Xd = Xd';
 td = [T; T]';
