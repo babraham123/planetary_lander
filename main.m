@@ -27,8 +27,7 @@ xd = xd'; vd = vd'; ad = ad';
 vd(:,end+1) = [0 0 0 0]';
 ad(:,end+1) = [0 0 0 0]'; ad(:,end+1) = [0 0 0 0]';
 
-% trajectory = [xd; vd; ad];
-trajectory = [xd'; vd; ad]; %trajectory = time, x,y,z,phi, dx,dy,dz,dphi, ddx,ddy,ddz,ddphi 
+trajectory = [xd; vd; ad]; %trajectory = time, x,y,z,phi, dx,dy,dz,dphi, ddx,ddy,ddz,ddphi 
 
 % calculate gains for PD control, [Kp; Kd]
 K = calculateGains(consts);
