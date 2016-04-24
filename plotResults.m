@@ -1,4 +1,5 @@
 function plotResults(T, X, Xd, U)
+%x,y,z, vx,vy,vz, theta,phi,psi, dtheta,dphi,dpsi
 
 figure;
 hold on;
@@ -47,21 +48,21 @@ legend({'actual', 'desired'});
 
 figure;
 hold on;
-plot(T, X(4,:)*180/pi);
-plot(T, Xd(4,:)*180/pi, '--');
-plot(T, X(5,:)*180/pi);
-plot(T, Xd(5,:)*180/pi, '--');
+plot(T, X(7,:)*180/pi);
+plot(T, Xd(7,:)*180/pi, '--');
+plot(T, X(8,:)*180/pi);
+plot(T, Xd(8,:)*180/pi, '--');
 grid on;
 xlabel('time (s)');
 ylabel('theta, phi (deg)');
 title('Angles {\theta}, {\phi}');
 hold off;
 legend({'theta', 'theta desired', 'phi', 'phi desired'});
-
+ 
 figure;
 hold on;
-plot(T, X(6,:)*180/pi);
-plot(T, Xd(6,:)*180/pi, '--');
+plot(T, X(9,:)*180/pi);
+plot(T, Xd(9,:)*180/pi, '--');
 grid on;
 xlabel('time (s)');
 ylabel('psi (deg)');

@@ -1,9 +1,13 @@
 function traj = eight_path(R,h,x0)
 
+consts = get_consts();
+tmin = consts.trange(1);
+tmax = consts.trange(2);
 dt = 0.1;
-travel = 8;
-t_travel = 0:dt:travel;
-t = travel+dt:dt:30;
+travel = floor((tmax-tmin/5)/dt)*dt; %20% of the time is getting to path
+t_travel = tmin:dt:travel;
+t = travel+dt:dt:tmax;
+
 n = length(t);
 Z = h*ones(1,n);
 X = R*sin(t+pi/2);

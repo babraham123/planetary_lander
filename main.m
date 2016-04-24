@@ -2,6 +2,9 @@
 % Bereket Abraham, Laura Fleury
 % Final Project
 % Rocket Powered Descent Simulation
+close all
+clear
+clc
 
 % load constant parameters
 consts = get_consts();
@@ -11,7 +14,8 @@ x0 = [10,10,10, 0,0,0, 0,0,0, 0,0,0]';
 T = linspace(consts.trange(1), consts.trange(2), consts.nIter);
 
 % generate trajectory of desired positions, xd = [x y z psi]
-trajectory = guidance(x0, 'hover');
+trajectory = guidance(x0, 'xline');
+%trajectory = trajectory(2:4,:);
 
 % interpolate and differentiate
 xd = interp1(trajectory(1,:)', trajectory(2:end,:)', T', 'pchip');
@@ -22,7 +26,9 @@ ad = diff(vd) ./ diff(td(1:end-1,:));
 xd = xd'; vd = vd'; ad = ad';
 vd(:,end+1) = [0 0 0 0]';
 ad(:,end+1) = [0 0 0 0]'; ad(:,end+1) = [0 0 0 0]';
-trajectory = [xd; vd; ad];
+
+% trajectory = [xd; vd; ad];
+trajectory = [xd'; vd; ad]; %trajectory = time, x,y,z,phi, dx,dy,dz,dphi, ddx,ddy,ddz,ddphi 
 
 % calculate gains for PD control, [Kp; Kd]
 K = calculateGains(consts);

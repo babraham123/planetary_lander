@@ -12,6 +12,7 @@ x0 = x0(:);
 X = zeros(n, steps);
 X(:,1) = x0;
 Xd = zeros(n, steps);
+Xd(:,1) = x0;
 U = zeros(6, steps);
 H = diff(T);
 theta_d = 0;
