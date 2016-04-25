@@ -81,16 +81,14 @@ for i = 1:n
     % State of rotation
     angles = eulerAngles(:,i);
 
-    c1 = cos(angles(1));
-    s1 = sin(angles(1));
-    c2 = cos(angles(2));
-    s2 = sin(angles(2));
-    c3 = cos(angles(3));
-    s3 = cos(angles(3));
+%     c1 = cos(angles(1));
+%     s1 = sin(angles(1));
+%     c2 = cos(angles(2));
+%     s2 = sin(angles(2));
+%     c3 = cos(angles(3));
+%     s3 = cos(angles(3));
 
-    R = [c3*c1-s2*s3*s1 -c2*c3 c3*s1+c1*s2*s3;
-    c1*s3+c3*s2*s1 c2*c3 s3*s1-c3*c1*s2;
-    -c2*s1 s2 c2*c2];
+    R = eulerToRot(angles);
     %position
     pos = xi(:,i);
     temp = traj(1:3,i);
