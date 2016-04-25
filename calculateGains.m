@@ -1,7 +1,9 @@
 function K = calculateGains(consts)
 
-kpx = 0.006;
-kdx = 0.12;
+%kpx = 0.006;
+kpx = 0.012;
+%kdx = 0.12;
+kdx = 0.18;
 kpz = 0.027;
 kdz = 0.26;
 kptheta = 20000;

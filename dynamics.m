@@ -18,7 +18,7 @@ omega = eulerToOmega(eulerAngles, dEulerAngles);
 omegaDot = consts.I \ (torque - cross(omega, consts.I*omega));
 
 %Spacial accelerations
-force_spatial = (R*force_body) - [0; 0; consts.mass*consts.g];
+force_spatial = (R'*force_body) - [0; 0; consts.mass*consts.g];
 vDot = force_spatial./consts.mass;
 
 xDot = [v; vDot; dEulerAngles; omegaDot];

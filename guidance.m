@@ -15,11 +15,11 @@ if (Mode == 'hover')
 
 elseif (Mode == 'circl')
 	% trace out circle
-	trajectory = circle_path(x0(1), x0(3), x0);
+	trajectory = circle_path(20, x0(3), x0);
 
 elseif (Mode == 'eight')
 	% trace out figure eight
-	trajectory = eight_path(x0(1), x0(3), x0);
+	trajectory = eight_path(20, x0(3), x0);
     
 elseif (Mode == 'zline')
 	% trace out figure eight

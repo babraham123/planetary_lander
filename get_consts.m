@@ -4,7 +4,7 @@ function consts = get_consts()
     consts.g = 3.71;
     consts.gEarth = 9.81;
 
-    consts.trange = [0 10];
+    consts.trange = [0 30];
     consts.nIter = (consts.trange(2) - consts.trange(1)) * 1000;
     consts.positionIter = (consts.trange(2) - consts.trange(1)) * 2;
     consts.attitudeIter = consts.positionIter * 5;

@@ -14,7 +14,7 @@ x0 = [10,10,10, 0,0,0, 0,0,0, 0,0,0]';
 T = linspace(consts.trange(1), consts.trange(2), consts.nIter);
 
 % generate trajectory of desired positions, xd = [x y z psi]
-trajectory = guidance(x0, 'xline');
+trajectory = guidance(x0, 'circl');
 
 % interpolate and differentiate
 xd = interp1(trajectory(1,:)', trajectory(2:end,:)', T', 'pchip');
