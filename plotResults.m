@@ -56,7 +56,7 @@ plot(T, Xd(8,:)*180/pi, '--');
 grid on;
 xlabel('time (s)');
 ylabel('phi, theta (deg)');
-title('Angles {\theta}, {\phi}');
+title('Angles {\phi}, {\theta}');
 hold off;
 legend({'phi', 'phi desired', 'theta', 'theta desired'});
  
@@ -71,8 +71,36 @@ title('Angle {\psi}');
 hold off;
 legend({'actual', 'desired'});
 
+figure;
+hold on;
+plot(T, U(3,:));
+grid on;
+xlabel('time (s)');
+ylabel('N');
+title('Force b3');
+hold off;
+
+figure;
+hold on;
+plot(T, U(4,:));
+plot(T, U(5,:));
+grid on;
+xlabel('time (s)');
+ylabel('Nm');
+title('Torque, {\phi}, {\theta}');
+legend({'{\phi}', '{\theta}'});
+hold off;
+
+figure;
+hold on;
+plot(T, U(6,:));
+grid on;
+xlabel('time (s)');
+ylabel('Nm');
+title('Torque {\psi}');
+hold off;
 
 % TODO
-% other angles, velocities, accelerations, thrusts, torques
+% other angles, velocities, accelerations
 
 end

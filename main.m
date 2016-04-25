@@ -9,7 +9,7 @@ clc
 % load constant parameters
 consts = get_consts();
 
-% x = x,y,z, vx,vy,vz, phi,theta,psi, wx,wy,wz
+% x    = x,y,z, vx,vy,vz, phi,theta,psi, dphi,dtheta,dpsi
 x0 = [-20,20,10, 0,0,0, 0,0,0, 0,0,0]';
 T = linspace(consts.trange(1), consts.trange(2), consts.nIter);
 
@@ -33,12 +33,13 @@ K = calculateGains(consts);
 % Integrate system
 [X, Xd, U] = simulate(T, x0, trajectory, consts, K);
 
-% J = compute_score(T, X, trajectory, consts);
-% disp(['Score: ' num2str(J)]) ;
+% x    = x,y,z, phi,theta,psi
+[ISE, MSE, IAE, ITAE] = calc_performance(T, X, Xd);
+disp(['Score [ISE, MSE, IAE, ITAE]: \n' mat2str([ISE, MSE, IAE, ITAE])]);
 
 % Plots
 plotResults(T, X, Xd, U);
 
 % Animation
-%animate3(T, X, Xd, U);
+animate3(T, X, Xd, U);
 
