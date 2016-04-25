@@ -9,15 +9,14 @@ function U = geomControl(x,traj,consts,K,theta_d,phi_d,omega)
 eulerAngles = x(7:9);
 R = eulerToRot(eulerAngles);
 Rd = eulerToRot([traj(4); theta_d,phi_d]);
-Om = Omega;
-Omd = 0*Om;
-dOmd = 0*Om;
+omega_d = 0*omega;
+domega_d = 0*omega;
 a3 = [0;0;1];
 b3 = R*a3;
 
 
 %calculating errors
-eo = Omd-Om;
+eo = omega_d-omega;
 er = 0.5*unSkew(Rd'*R-R'*Rd); 
 ep = traj(1:3)-x(1:3);
 ev = traj(5:8) - x(4:6);
@@ -28,7 +27,9 @@ Kd = K(4:6);
 kr = K(7:9);
 ko = K(10:12);
 
-u1 = mass*b3'*(a_d + Kd*ev + Kp*ep + g*a3); %Multirotor Aerial Vehicles (31)
-u2 = I*(-kr*er-ko*eo) + cross(Om,I*Om) - I*(cross(Om,R'*Rd*Omd)-R'*Rd*dOmd); %Multirotor Aerial Vehicles (27)
+u1 = mass*b3'*(a_d + Kd*ev + Kp*ep + g*a3); 
+%Multirotor Aerial Vehicles (31)
+u2 = I*(-kr*er-ko*eo) + cross(omega,consts.I*omega) - consts.I*(cross(omega,R'*Rd*omega_d)-R'*Rd*domega_d); 
+%Multirotor Aerial Vehicles (27)
 
 U = [u1;u2];
