@@ -1,5 +1,6 @@
 function plotResults(T, X, Xd, U)
-%x,y,z, vx,vy,vz, phi,theta,psi, dphi,dtheta,dpsi
+% x = x,y,z, vx,vy,vz, phi,theta,psi, dphi,dtheta,dpsi
+%trajectory = x,y,z,psi, dx,dy,dz,dpsi, ddx,ddy,ddz,ddpsi 
 
 figure;
 hold on;
