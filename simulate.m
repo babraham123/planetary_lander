@@ -51,8 +51,8 @@ for k = 1:steps-1
            
         else
             % Force saturations
-            u(1:3) = min(max(u(1:3), consts.forceMin), consts.forceMax);
-            u(4:6) = min(max(u(4:6), -consts.torqueMaxAbs), consts.torqueMaxAbs);
+            %u(1:3) = min(max(u(1:3), consts.forceMin), consts.forceMax);
+            %u(4:6) = min(max(u(4:6), -consts.torqueMaxAbs), consts.torqueMaxAbs);
         end
         
     end

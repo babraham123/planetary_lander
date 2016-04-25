@@ -10,8 +10,8 @@ t = travel+dt:dt:tmax;
 
 n = length(t);
 Z = h*ones(1,n);
-X = R*sin(t);
-Y = R*cos(t);
+X = R*sin(0.25*t);
+Y = R*cos(0.25*t);
 for i = 1: length(t_travel)
 x(:,i) = x0(1:3) + t_travel(i)/travel.*([X(1);Y(1);Z(1)]-x0(1:3));
 
