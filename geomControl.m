@@ -1,7 +1,7 @@
 function U = geomControl(x,traj,consts,K,theta_d,phi_d,omega)
-% x    = x,y,z, vx,vy,vz, theta,phi,psi, dtheta,dphi,dpsi
+% x    = x,y,z, vx,vy,vz, phi,tehta,psi, dphi,dtheta,dpsi
 % traj = x,y,z,psi, vx,vy,vz,dpsi, ax,ay,az,ddpsi
-% K = kpx,kpy,kpz, kdx,kdy,kdz, kptheta,kpphi,kppsi, kdtheta,kdphi,kdpsi
+% K = kpx,kpy,kpz, kdx,kdy,kdz, kpphi,kptheta,kppsi, kdphi,kdtheta,kdpsi
 %desired Om and OmDot are assumed to be 0
 %U = u1 (body z force) u2 (body torques)
 

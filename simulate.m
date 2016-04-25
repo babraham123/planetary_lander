@@ -1,5 +1,5 @@
 function [X, Xd, U] = simulate(T, x0, trajectory, consts, K) 
-% x    = x,y,z, vx,vy,vz, theta,phi,psi, dtheta,dphi,dpsi
+% x    = x,y,z, vx,vy,vz, phi,theta,psi, dphi,dtheta,dpsi
 % traj = x,y,z,psi, vx,vy,vz,dpsi, ax,ay,az,ddpsi
 
 thrusterSelection = false;
@@ -30,12 +30,12 @@ for k = 1:steps-1
 
     if (mod(k-1, consts.positionIter) == 0)
         Fb3 = positionControl(x, traj, consts, K);
-        [theta_d, phi_d] = attitudePlanner(x, traj, consts, K);
+        [phi_d, theta_d] = attitudePlanner(x, traj, consts, K);
         update = true;
     end
 
     if (mod(k-1, consts.attitudeIter) == 0)
-        M = attitudeControl(Fb3, x, [theta_d, phi_d, traj(4)], K);
+        M = attitudeControl(Fb3, x, [phi_d, theta_d, traj(4)], K);
         update = true;
     end
 
@@ -60,13 +60,9 @@ for k = 1:steps-1
     X(:,k+1) = x + xDot*h;
     X(10:12,k+1) = omegaToEuler(X(7:9,k+1), omega + xDot(10:12)*h);
 
-    Xd(:,k) = [traj(1:3); traj(5:7); theta_d;phi_d;traj(4); 0;0;traj(8)];
+    Xd(:,k+1) = [traj(1:3); traj(5:7); phi_d;theta_d;traj(4); 0;0;traj(8)];
     U(:,k) = u;
 end
-
-traj = trajectory(:,end);
-Xd(:,end) = [traj(1:3); traj(5:7); theta_d;phi_d;traj(4); 0;0;traj(8)];
-U(:,end) = u;
 
 Xd = Xd';
 td = [T; T]';
