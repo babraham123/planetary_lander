@@ -4,7 +4,7 @@ consts = get_consts();
 tmin = consts.trange(1);
 tmax = consts.trange(2);
 dt = 0.1;
-travel = floor(((tmax-tmin)/5)/dt)*dt
+travel = floor(((tmax-tmin)/5)/dt)*dt;
 t_travel = tmin:dt:travel;
 t = travel+dt:dt:tmax;
 
