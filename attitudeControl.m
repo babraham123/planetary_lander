@@ -1,6 +1,5 @@
 function M = attitudeControl(Fb3, x, angles_d, K)
 % K = kpx,kpy,kpz, kdx,kdy,kdz, kptheta,kpphi,kppsi, kdtheta,kdphi,kdpsi
-% assume desired angular velocity is zero
 
 Kp = K(7:9);
 Kd = K(10:12);

@@ -9,7 +9,7 @@ clc
 % load constant parameters
 consts = get_consts();
 
-% x = x,y,z, vx,vy,vz, theta,phi,psi, wx,wy,wz
+% x = x,y,z, vx,vy,vz, phi,theta,psi, wx,wy,wz
 x0 = [10,10,10, 0,0,0, 0,0,0, 0,0,0]';
 T = linspace(consts.trange(1), consts.trange(2), consts.nIter);
 
@@ -23,11 +23,10 @@ xd = interp1(trajectory(1,:)', trajectory(2:end,:)', T', 'pchip');
 td = repmat(T', [1, 4]);
 vd = diff(xd) ./ diff(td);
 ad = diff(vd) ./ diff(td(1:end-1,:));
-xd = xd'; vd = vd'; ad = ad';
+vd = vd'; ad = ad';
 vd(:,end+1) = [0 0 0 0]';
 ad(:,end+1) = [0 0 0 0]'; ad(:,end+1) = [0 0 0 0]';
-
-trajectory = [xd; vd; ad]; %trajectory = time, x,y,z,phi, dx,dy,dz,dphi, ddx,ddy,ddz,ddphi 
+trajectory = [xd'; vd; ad]; %trajectory = time, x,y,z,phi, dx,dy,dz,dphi, ddx,ddy,ddz,ddphi 
 
 % calculate gains for PD control, [Kp; Kd]
 K = calculateGains(consts);

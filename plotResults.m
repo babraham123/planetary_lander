@@ -1,5 +1,5 @@
 function plotResults(T, X, Xd, U)
-%x,y,z, vx,vy,vz, theta,phi,psi, dtheta,dphi,dpsi
+%x,y,z, vx,vy,vz, phi,theta,psi, dphi,dtheta,dpsi
 
 figure;
 hold on;
@@ -54,10 +54,10 @@ plot(T, X(8,:)*180/pi);
 plot(T, Xd(8,:)*180/pi, '--');
 grid on;
 xlabel('time (s)');
-ylabel('theta, phi (deg)');
+ylabel('phi, theta (deg)');
 title('Angles {\theta}, {\phi}');
 hold off;
-legend({'theta', 'theta desired', 'phi', 'phi desired'});
+legend({'phi', 'phi desired', 'theta', 'theta desired'});
  
 figure;
 hold on;

@@ -1,6 +1,6 @@
 function [xDot, omega] = dynamics(X, U, consts) 
-% x    = x,y,z, vx,vy,vz, theta,phi,psi, dtheta,dphi,dpsi
-% xDot = vx,vy,vz, ax,ay,az, dtheta,dphi,dpsi, dwx,dwy,dwz
+% x    = x,y,z, vx,vy,vz, phi,theta,psi, dphi,dtheta,dpsi
+% xDot = vx,vy,vz, ax,ay,az, dphi,dtheta,dpsi, dwx,dwy,dwz
 % u = f_b1, f_b2, f_b3, tx, ty, tz,
 
 % initialize variables
