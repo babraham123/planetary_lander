@@ -6,8 +6,8 @@ kpx = 0.012;
 kdx = 0.18;
 kpz = 0.027;
 kdz = 0.26;
-kptheta = 20000;
-kdtheta = 16000;
+kptheta = 8000;
+kdtheta = 10000;
 kppsi = 4000;
 kdpsi = 3500;
 

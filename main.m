@@ -9,12 +9,13 @@ clc
 % load constant parameters
 consts = get_consts();
 
-% x = x,y,z, vx,vy,vz, phi,theta,psi, dphi,dtheta,dpsi,
-x0 = [10,10,10, 0,0,0, 0,0,0, 0,0,0]';
+% x = x,y,z, vx,vy,vz, phi,theta,psi, wx,wy,wz
+x0 = [-20,20,10, 0,0,0, 0,0,0, 0,0,0]';
 T = linspace(consts.trange(1), consts.trange(2), consts.nIter);
 
 % generate trajectory of desired positions, xd = [x y z psi]
 trajectory = guidance(x0, 'circl');
+%trajectory = trajectory(2:4,:);
 
 % interpolate and differentiate
 xd = interp1(trajectory(1,:)', trajectory(2:end,:)', T', 'pchip');
@@ -25,7 +26,7 @@ ad = diff(vd) ./ diff(td(1:end-1,:));
 vd = vd'; ad = ad';
 vd(:,end+1) = [0 0 0 0]';
 ad(:,end+1) = [0 0 0 0]'; ad(:,end+1) = [0 0 0 0]';
-trajectory = [xd'; vd; ad]; %trajectory = time, x,y,z,psi, dx,dy,dz,dpsi, ddx,ddy,ddz,ddpsi 
+trajectory = [xd'; vd; ad]; %trajectory = time, x,y,z,phi, dx,dy,dz,dphi, ddx,ddy,ddz,ddphi 
 
 % calculate gains for PD control, [Kp; Kd]
 K = calculateGains(consts);
@@ -40,5 +41,5 @@ K = calculateGains(consts);
 plotResults(T, X, Xd, U);
 
 % Animation
-% animate3(T, X, Xd, U);
+%animate3(T, X, Xd, U);
 
