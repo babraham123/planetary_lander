@@ -27,16 +27,19 @@ vd(:,end+1) = [0 0 0 0]';
 ad(:,end+1) = [0 0 0 0]'; ad(:,end+1) = [0 0 0 0]';
 trajectory = [xd'; vd; ad]; %trajectory = time, x,y,z,psi, dx,dy,dz,dpsi, ddx,ddy,ddz,ddpsi 
 
-% Integrate system
-[X, Xd, U, Ud, Ft] = simulate(T, x0, trajectory, consts);
+range = 0.25:0.25:2;
+gains = range .* consts.K(1);
+MSE = []; ISE = []; posErr = []; Ft_tot = [];
+for k=1:length(gains)
+    consts.K(1) = gains(k);
+    consts.K(2) = gains(k);
+    [X, Xd, U, Ud, Ft] = simulate(T, x0, trajectory, consts);
+    [ise, mse, ~, ~] = calc_performance(T, X, Xd);
+    ISE = [ISE, ise];
+    MSE = [MSE, mse];
+    posErr(:,:,k) = Xd(1:3,:) - X(1:3,:);
+    Ft_tot(k,:) = sum(Ft, 1);
+end
 
-% x    = x,y,z, phi,theta,psi
-[ISE, MSE, IAE, ITAE] = calc_performance(T, X, Xd);
-disp(['Score [ISE, MSE, IAE, ITAE]: \n' mat2str([ISE, MSE, IAE, ITAE])]);
-
-% Plots
-plotResults(T, X, Xd, U, Ud, Ft, consts);
-
-% Animation
-%animate3(T, X, Xd, U, consts);
+plotGains(ISE, MSE, T, posErr, Ft_tot, gains);
 

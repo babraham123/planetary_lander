@@ -5,17 +5,19 @@ clc
 format long g
 format compact
 
-kpx = 0.006;
-kdx = 0.12;
-kpz = 0.027;
-kdz = 0.26;
-kptheta = 20000;
-kdtheta = 16000;
-kppsi = 4000;
-kdpsi = 3500;
+%kpx = 0.006;
+    kpx = 0.012*15;
+    %kdx = 0.12;
+    kdx = 0.18*4;
+    kpz = 0.027*2;
+    kdz = 0.26*1.5;
+    kptheta = 8000*2;
+    kdtheta = 10000*1.4;
+    kppsi = 4000*.9;
+    kdpsi = 3500;
 
-%xd = 10*pi/180;
-xd = 10;
+xd = 20*pi/180;
+%xd = 10;
 dxd = 0;
 dt = 1/100;
 
@@ -29,10 +31,10 @@ nj = 50;
 T = 0:dt:ni*nj*dt;
 
 %m = 3300 * 2.25^2/12;
-%m = 3300/12 * (3*2.25^2 + 4);
-m = 3300;
-kp = .012*m;
-kd = .18*m;
+m = 3300/12 * (3*2.25^2 + 4);
+%m = 3300;
+kp = kptheta;
+kd = kdtheta;
 F = [];
 
 for i = 1:ni;

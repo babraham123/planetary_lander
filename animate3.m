@@ -1,4 +1,3 @@
-function animate3(t_orig, x_orig, traj_orig, u_orig)
 rate = 2.5;  % Change this to speed up / slow down animation [Matlab R2014b and onwards appears to have slow rendering for animation.]
 
 %T = linspace(t_orig(1), t_orig(end), round( (t_orig(end)-t_orig(1))*rate ))' ;
@@ -68,14 +67,14 @@ F0 = hgtransform('Parent',gca);
 set(L0,'Parent',F0);
 set(T0,'Parent',F0);
 set(A0,'Parent',F0);
-F0
-F0.Children
+% F0
+% F0.Children
 grid on
 xlabel('X','fontweight' ,'bold')
 ylabel('Y','fontweight','bold')
 zlabel('Z','fontweight','bold')
 axis([xax yax zax]) % expand & lock our view axes, to see better
-
+%pause(4)
 %%Animation;
 n = length(T);
 
@@ -110,3 +109,4 @@ for i = 1:200:n
 end
 
 end
+

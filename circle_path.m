@@ -1,6 +1,5 @@
-function traj = circle_path(R,h,x0)
+function traj = circle_path(R, h, x0, consts)
 
-consts = get_consts();
 tmin = consts.trange(1);
 tmax = consts.trange(2);
 dt = 0.1;
@@ -16,9 +15,16 @@ for i = 1: length(t_travel)
 x(:,i) = (x0(1:3) + t_travel(i)/travel.*([X(1);Y(1);Z(1)]-x0(1:3))*sin(t_travel(i)*pi/(2*travel)));
 
 end
-x;
-[X Y Z];
-traj = [t_travel t; x [X; Y; Z]];
+temp = [x [X; Y; Z]];
+tempx = smooth(temp(1,:));
+tempy = smooth(temp(2,:));
+tempz = smooth(temp(3,:));
+% size(temp)
+% size(tempx')
+% size(tempy')
+% size(tempz')
+% size([t_travel, t])
+traj = [t_travel t; tempx'; tempy'; tempz'];
 n = size(traj, 2);
 traj = [traj; zeros(1,n)];
 
