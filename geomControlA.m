@@ -1,4 +1,4 @@
-function U = geomControl(x,traj,consts,phi_d,theta_d, weighted)
+function U = geomControlA(x,traj,consts,phi_d,theta_d,omega)
 % x    = x,y,z, vx,vy,vz, phi,tehta,psi, dphi,dtheta,dpsi
 % traj = x,y,z,psi, vx,vy,vz,dpsi, ax,ay,az,ddpsi
 % K = kpx,kpy,kpz, kdx,kdy,kdz, kpphi,kptheta,kppsi, kdphi,kdtheta,kdpsi
@@ -12,21 +12,14 @@ g = consts.g;
 
 %Rotational States
 eulerAngles = x(7:9);
-desiredA = [phi_d; theta_d; traj(4)];
 dAngles = x(10:12);
 R = eulerToRot(eulerAngles);
-Rd = eulerToRot(desiredA);
-if (weighted)
-	Amean = (7*eulerAngles+desiredA)/8;
-else
-	Amean = eulerAngles;
-end
-R_mean = eulerToRot(Amean);
+Rd = eulerToRot([phi_d, theta_d, traj(4)]);
 Om = eulerToOmega(eulerAngles, dAngles);
 Omd = 0*Om;
 dOmd = 0*Om;
 a3 = [0;0;1];
-b3 = R_mean*a3;
+b3 = R*a3;
 a_d = traj(9:11);
 
 %calculating errors

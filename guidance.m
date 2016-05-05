@@ -43,6 +43,17 @@ elseif (Mode == 'xline')
     xd(1,:) = [x0(1):dx:x0(1)+10];
     t = linspace(consts.trange(1), consts.trange(2), N);
     trajectory = [t; xd];
+
+elseif (Mode == 'fline')
+    x0 = [x0(1); x0(2); x0(3); x0(4)];
+    totdist = (consts.trange(2) - consts.trange(1))*2;
+    dx = (totdist/(N-1));
+    xd = repmat(x0, [1, N]);
+    xd(1,:) = [x0(1):dx:x0(1)+totdist];
+    xd(2,:) = [x0(2):dx:x0(2)+totdist];
+    xd(3,:) = [x0(3):dx:x0(3)+totdist];
+    t = linspace(consts.trange(1), consts.trange(2), N);
+    trajectory = [t; xd];
 end
 
 end

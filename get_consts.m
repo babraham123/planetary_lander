@@ -3,8 +3,8 @@ function consts = get_consts()
 
     consts.g = 3.71; % gEarth = 9.81;
 
-    consts.trange = [0 68]; % [0 100];
-    consts.nIter = (consts.trange(2) - consts.trange(1)) * 3400;
+    consts.trange = [0 100];
+    consts.nIter = (consts.trange(2) - consts.trange(1)) * 5000;
     consts.positionIter = (consts.trange(2) - consts.trange(1)) * 2;
     consts.attitudeIter = consts.positionIter * 5;
 

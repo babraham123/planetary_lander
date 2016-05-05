@@ -1,8 +1,20 @@
-function [X, Xd, U, Ud, Ft] = simulate(T, x0, trajectory, consts) 
+function [X, Xd, U, Ud, Ft] = simulate(T, x0, trajectory, consts, controller) 
 % x    = x,y,z, vx,vy,vz, phi,theta,psi, dphi,dtheta,dpsi
 % traj = x,y,z,psi, vx,vy,vz,dpsi, ax,ay,az,ddpsi
 
 thrusterSelection = true;
+weighted = false;
+geometric = false;
+noise = false;
+
+if (controller == 1)
+    geometric = false;
+elseif (controller == 2)
+    geometric = true;
+else
+    geometric = true;
+    weighted = true;
+end
 
 n = length(x0);
 steps = length(T);
@@ -32,17 +44,23 @@ for k = 1:steps-1
     traj = trajectory(:,k);
 
     if (mod(k-1, consts.positionIter) == 0)
-        %Fb3 = positionControl(x, traj, consts);
-        temp = geomControl(x,traj,consts,phi_d,theta_d);
-        Fb3 = temp(1);
+        if (geometric)
+            control = geomControl(x,traj,consts,phi_d,theta_d, weighted);
+            Fb3 = control(1);
+        else
+            Fb3 = positionControl(x, traj, consts);
+        end
         [phi_d, theta_d] = attitudePlanner(x, traj, consts);
         update = true;
     end
 
     if (mod(k-1, consts.attitudeIter) == 0)
-        temp = geomControl(x,traj,consts,phi_d,theta_d); 
-        M = temp(2:4);
-        %M = attitudeControl(Fb3, x, [phi_d, theta_d, traj(4)],consts);
+        if (geometric)
+            control = geomControl(x,traj,consts,phi_d,theta_d, weighted); 
+            M = control(2:4);
+        else
+            M = attitudeControl(Fb3, x, [phi_d, theta_d, traj(4)],consts);
+        end
         update = true;
     end
 
@@ -54,7 +72,9 @@ for k = 1:steps-1
         % thruster saturations
         ft = min(max(ft, consts.thrusterMin.*ones(8,1)), consts.thrusterMax.*ones(8,1));
         u = consts.H*ft;
-        u = awgn(u,90,'measured'); %noise put in for thrusters
+        if (noise)
+            u = awgn(u,90,'measured'); %noise put in for thrusters
+        end
     end
 
     % nonlinear dynamics
@@ -65,8 +85,9 @@ for k = 1:steps-1
     end
     X(:,k+1) = x + xDot*h;
     X(10:12,k+1) = omegaToEuler(X(7:9,k+1), omega + xDot(10:12)*h);
-    X(:,k+1) = awgn(X(:,k+1),90, 'measured'); %noise in measurement
-
+    if (noise)
+        X(:,k+1) = awgn(X(:,k+1),90, 'measured'); %noise in measurement
+    end
     Xd(:,k+1) = [traj(1:3); traj(5:7); phi_d;theta_d;traj(4); 0;0;traj(8)];
     U(:,k) = u;
     Ud(:,k) = ud;
